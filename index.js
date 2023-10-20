@@ -1,3 +1,3 @@
-const scorer = require('./scrabble-scorer');
+const scorer = require('./scrabble-scorer.js');
 
 scorer.runProgram();
