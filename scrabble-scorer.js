@@ -17,18 +17,12 @@ const newPointStructure = {};
 function transform(oldPointStructure) {
   for (const score in oldPointStructure) {
     for (const letter of oldPointStructure[score]) {
-      newPointStructure[letter.toLowerCase()] = parseInt(score); 
+      newPointStructure[letter.toLowerCase()] = parseInt(score);
     }
   }
-  //stops spaces from being scored
-  //newPointStructure[' '] = 0;
-  //stops astericks & special chars from being scored
-  //newPointStructure['*'] = 0;
-  
+
   return newPointStructure;
 }
-
-
 
 function initialPrompt() {
   return input.question("Let's play some Scrabble!\n\nPlease enter a word to score: ");
@@ -53,9 +47,6 @@ function oldScrabbleScorer(word) {
   return letterPoints;
 }
 
-// your job is to finish writing these functions and variables that we've named //
-// don't change the names or your program won't work as expected. //
-
 function simpleScorer(word) {
   let score = word.length;
   return score;
@@ -68,9 +59,9 @@ function vowelBonusScorer(word) {
 
   for (let i = 0; i < word.length; i++) {
     if (vowels.includes(word[i])) {
-      score += 3; // Add 3 points for vowels.
+      score += 3;
     } else {
-      score += 1; // Add 1 point for consonants.
+      score += 1;
     }
   }
   return score;
@@ -119,27 +110,23 @@ function scorerPrompt(word) {
 
   if (choice >= 0 && choice < scoringAlgorithms.length) {
     const selectedAlgorithm = scoringAlgorithms[choice];
-    console.log(`Algorithm name: ${selectedAlgorithm.name}`);
     const score = selectedAlgorithm.scorerFunction(word);
-    console.log(`Score for '${word}': ${score}`);
-    return selectedAlgorithm;
+    return {
+      name: selectedAlgorithm.name,
+      score: score
+    };
   } else {
     console.log("Invalid choice. Please select 0, 1, or 2.");
     return null;
   }
 }
 
-/*function transform(oldPointStructure) {
-  for (const score in oldPointStructure) {
-    for (const letter of oldPointStructure[score]) {
-      newPointStructure[letter.toLowerCase()] = parseInt(score);
-    }
-  }
-  return newPointStructure;
-}*/
-
 function runProgram() {
-  scorerPrompt(word);
+  const result = scorerPrompt(word);
+  if (result) {
+    console.log(`Algorithm name: ${result.name}`);
+    console.log(`Score for '${word}': ${result.score}`);
+  }
 }
 
 // Don't write any code below this line //
